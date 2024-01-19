@@ -43,20 +43,22 @@ func main() {
 		if err2 != nil{
 			fmt.Println(err2)
 			return
-}
+		}
 		fmt.Println("User ID:", userID)
 		if (msg.IsText() && msg.IsSendByGroup()) {
 			fmt.Printf("%+v\n", msg)
 
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println("Error parsing time:", err)
+				return
 			}
 			tm := time.Unix(i, 0)
-	    // Load the desired timezone
+	    	// Load the desired timezone
 			location, err := time.LoadLocation("Asia/Shanghai")  // Asia/Shanghai is UTC+8
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println("Error loading location:", err)
+				return
 			}
 	
 			// Convert the time value to the desired timezone
@@ -76,8 +78,6 @@ func main() {
 		}
 	}
 
-
-
 	// 注册登陆二维码回调
 	bot.UUIDCallback = openwechat.PrintlnQrcodeUrl
 
@@ -96,11 +96,19 @@ func main() {
 
 	// 获取所有的好友
 	friends, err := self.Friends()
-	fmt.Println(friends, err)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(friends)
 
 	// 获取所有的群组
 	groups, err := self.Groups()
-	fmt.Println(groups, err)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(groups)
 
 	// 阻塞主goroutine, 直到发生异常或者用户主动退出
 	bot.Block()
