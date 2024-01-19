@@ -17,6 +17,10 @@ func main() {
 			return
 }
 		fmt.Println("User ID:", userID)
+
+		fmt.Printf("%+v\n", *msg)
+
+		
     if msg.IsRecalled() {
         revokeMsg, err := msg.RevokeMsg()
 		if err != nil{
