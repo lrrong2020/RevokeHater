@@ -65,7 +65,7 @@ func main() {
 			item := QueueItem{
 				SenderNickName: sender.NickName, 
 				MessageCreateTime: msg.CreateTime,
-				MessageID: tm.Format(time.RFC3339),
+				MessageID: tm.Format("1月2日 15:04"),
 				MessageContent: msg.Content,
 			}
 	
