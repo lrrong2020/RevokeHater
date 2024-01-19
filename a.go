@@ -38,7 +38,7 @@ func main() {
 	queue := &Queue{}
 
 	bot.MessageHandler = func(msg *openwechat.Message) {
-		sender, err2 := msg.Sender()
+		sender, err2 := msg.SenderInGroup()
 		userID := sender.ID()
 		if err2 != nil{
 			fmt.Println(err2)
@@ -64,8 +64,8 @@ func main() {
 
 			item := QueueItem{
 				SenderNickName: sender.NickName, 
-				MessageCreateTime: msg.CreateTime,
-				MessageID: tm.Format("1月2日 15:04"),
+				MessageCreateTime: tm.Format("1月2日 15:04"),
+				MessageID: msg.MsgId,
 				MessageContent: msg.Content,
 			}
 	
