@@ -13,7 +13,7 @@ func main() {
 		sender, err2 := msg.Sender()
 		userID := sender.ID()
 		if err2 != nil{
-			fmt.Println(err)
+			fmt.Println(err2)
 			return
 }
 		fmt.Println("User ID:", userID)
