@@ -44,12 +44,13 @@ func main() {
 	queue := &Queue{}
 
 	bot.MessageHandler = func(msg *openwechat.Message) {
-		fmt.Printf("%+v\n", *msg)
+		fmt.Printf("%+v\n\n", *msg)
 		sender, err2 := msg.SenderInGroup()
 		if err2 != nil{
 			fmt.Println(err2)
 			return
 		}
+		fmt.Printf("%+v\n\n", *sender)
 		userID := sender.ID()
 		fmt.Println("User ID:", userID)
 		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName=="@a9507465da57d650f7a8dfa8b42d5d41a3c43bcb29f217ec3cb9e41740d9218b") {
