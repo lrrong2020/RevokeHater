@@ -10,21 +10,19 @@ func main() {
 
 	// 注册消息处理函数
 	bot.MessageHandler = func(msg *openwechat.Message) {
+		sender, err2 := msg.Sender()
+		userID := sender.ID()
+		fmt.Println("User ID:", userID)
     if msg.IsRecalled() {
         revokeMsg, err := msg.RevokeMsg()
-        sender, err2 := msg.Sender()
-userID := sender.ID()
-
-// Print the User ID
-fmt.Println("User ID:", userID)
-	if err != nil && err2 != nil {
+		if err != nil{
             fmt.Println(err)
             return
-        }
+  	}
         // Here you can access the fields of revokeMsg and reply accordingly
         // For example, you can reply with the content of the recalled message
-        msg.ReplyText(fmt.Sprintf("You've recalled a message with ID: %d", revokeMsg.RevokeMsg.ReplaceMsg))
-	msg.ReplyText(fmt.Sprintf("UserID: %d", userID))	
+  	msg.ReplyText(fmt.Sprintf("You've recalled a message with ID: %d", revokeMsg.RevokeMsg.ReplaceMsg))
+		msg.ReplyText(fmt.Sprintf("UserID: %d", userID))	
     } else if msg.IsText() && msg.Content == "ping" {
         msg.ReplyText("pong")
     }
