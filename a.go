@@ -17,10 +17,12 @@ func main() {
 			return
 }
 		fmt.Println("User ID:", userID)
+		
 
+		fmt.Printf("%+v\n", *sender)
 		fmt.Printf("%+v\n", *msg)
 
-		
+
     if msg.IsRecalled() {
         revokeMsg, err := msg.RevokeMsg()
 		if err != nil{
@@ -30,8 +32,8 @@ func main() {
 
         // Here you can access the fields of revokeMsg and reply accordingly
         // For example, you can reply with the content of the recalled message
-  	msg.ReplyText(fmt.Sprintf("You've recalled a message with ID: %d", revokeMsg.RevokeMsg.ReplaceMsg))
-		msg.ReplyText(fmt.Sprintf("UserID: %d", userID))	
+  	// msg.ReplyText(fmt.Sprintf("You've recalled a message with ID: %d", revokeMsg.RevokeMsg.ReplaceMsg))
+		// msg.ReplyText(fmt.Sprintf("UserID: %d", userID))	
     } else if msg.IsText() && msg.Content == "ping" {
         msg.ReplyText("pong")
     }
