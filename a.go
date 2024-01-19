@@ -44,6 +44,7 @@ func main() {
 	queue := &Queue{}
 
 	bot.MessageHandler = func(msg *openwechat.Message) {
+		fmt.Printf("%+v\n", *msg)
 		sender, err2 := msg.SenderInGroup()
 		if err2 != nil{
 			fmt.Println(err2)
@@ -52,7 +53,7 @@ func main() {
 		userID := sender.ID()
 		fmt.Println("User ID:", userID)
 		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName=="@@bbd3e48e9da777ad2e34c453a4b51f0ec18ccabb8c92c289f2d055d136b89636") {
-			fmt.Printf("%+v\n", *msg)
+
 
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
 			if err != nil {
