@@ -65,7 +65,7 @@ func main() {
 			return
 		}
 		// fmt.Printf("%+v\n\n", *sender)
-		userID := sender.ID()
+
 		// fmt.Println("User ID:", userID)
 
 
@@ -119,7 +119,7 @@ func main() {
 	
 			queue.Add(item)
 			// fmt.Printf("%+v\n", item)
-			size := queue.Size()
+			// size := queue.Size()
 			// fmt.Println("Size of the queue:", size)
 		}
 
