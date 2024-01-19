@@ -53,7 +53,14 @@ func main() {
 		fmt.Printf("%+v\n\n", *sender)
 		userID := sender.ID()
 		fmt.Println("User ID:", userID)
-		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName=="@a9507465da57d650f7a8dfa8b42d5d41a3c43bcb29f217ec3cb9e41740d9218b") {
+
+		toUserName := ""
+		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[UpdateToUserNameRT1046]") ){
+			toUserName := msg.RawContent[27:]
+			fmt.Println(toUserName)
+		}
+
+		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName==toUserName) {
 
 
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
