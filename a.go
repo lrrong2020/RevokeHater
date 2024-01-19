@@ -61,6 +61,10 @@ func main() {
 			fmt.Println(toUserName)
 		}
 
+		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[FetchToUserNameRT12040]") ){
+			msg.ReplyText(toUserName)
+		}
+
 		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName==toUserName) {
 
 
