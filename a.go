@@ -39,11 +39,11 @@ func main() {
 
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		sender, err2 := msg.SenderInGroup()
-		userID := sender.ID()
 		if err2 != nil{
 			fmt.Println(err2)
 			return
 		}
+		userID := sender.ID()
 		fmt.Println("User ID:", userID)
 		if (msg.IsText() && msg.IsSendByGroup()) {
 			fmt.Printf("%+v\n", msg)
