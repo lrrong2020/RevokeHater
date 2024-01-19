@@ -46,7 +46,7 @@ func main() {
 }
 		fmt.Println("User ID:", userID)
 		if msg.IsText(){
-			i, err := strconv.ParseInt(msg.CreateTime, 10, 64)
+			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
 			if err != nil {
 					panic(err)
 			}
