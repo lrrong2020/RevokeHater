@@ -62,8 +62,13 @@ func main() {
 		}
 
 		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[FetchToUserNameRT12040]") ){
-			fmt.Println("Get ToUserName: ", msg.ToUserName)
-			msg.ReplyText(msg.ToUserName)
+			fmt.Println("Get toUserName: ", toUserName)
+			msg.ReplyText(toUserName)
+		}
+
+		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[MessageToUserNameRT040]") ){
+			fmt.Println("Get msg.ToUserName: ", msg.ToUserName)
+			msg.ReplyText("msg.ToUserName: ", msg.ToUserName)
 		}
 
 		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName==toUserName) {
