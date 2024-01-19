@@ -27,7 +27,7 @@ func (q *Queue) Add(item QueueItem) {
 	defer q.mu.Unlock()
 
 	q.items = append(q.items, item)
-	if len(q.items) > 3 {
+	if len(q.items) > 500 {
 		// Discard the oldest item.
 		q.items = q.items[1:]
 	}
@@ -58,15 +58,15 @@ func main() {
 	// Initialize the queue.
 	queue := &Queue{}
 	bot.MessageHandler = func(msg *openwechat.Message) {
-		fmt.Printf("%+v\n\n", *msg)
+		// fmt.Printf("%+v\n\n", *msg)
 		sender, err2 := msg.SenderInGroup()
 		if err2 != nil{
 			fmt.Println(err2)
 			return
 		}
-		fmt.Printf("%+v\n\n", *sender)
+		// fmt.Printf("%+v\n\n", *sender)
 		userID := sender.ID()
-		fmt.Println("User ID:", userID)
+		// fmt.Println("User ID:", userID)
 
 
 		// if (msg.IsText() && strings.HasPrefix(msg.Content, ":-::---:::") ){
@@ -107,7 +107,7 @@ func main() {
 			// Convert the time value to the desired timezone
 			tm = tm.In(location)
 	
-			fmt.Println(tm)
+			// fmt.Println(tm)
 
 			item := QueueItem{
 				SenderNickName: sender.NickName,
@@ -118,9 +118,9 @@ func main() {
 			}
 	
 			queue.Add(item)
-			fmt.Printf("%+v\n", item)
+			// fmt.Printf("%+v\n", item)
 			size := queue.Size()
-			fmt.Println("Size of the queue:", size)
+			// fmt.Println("Size of the queue:", size)
 		}
 
 		if msg.IsRecalled() {
