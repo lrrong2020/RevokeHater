@@ -6,6 +6,7 @@ import (
 	"time"
 	"strconv"
 	"strings"
+	"os"
 	"github.com/eatmoreapple/openwechat"
 )
 
@@ -58,6 +59,7 @@ func main() {
 	// Initialize the queue.
 	queue := &Queue{}
 	var toUserName string
+  var resString string
 
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		fmt.Printf("%+v\n\n", *msg)
@@ -71,16 +73,28 @@ func main() {
 		fmt.Println("User ID:", userID)
 
 
-		if (msg.IsText() && strings.HasPrefix(msg.Content, ":-::---:::") ){
-			toUserName = msg.ToUserName
-			fmt.Println("Update ToUserName: ", toUserName)
-		}
+		// if (msg.IsText() && strings.HasPrefix(msg.Content, ":-::---:::") ){
+		// 	toUserName = msg.ToUserName
+		// 	fmt.Println("Update ToUserName: ", toUserName)
+
+		// 	var group *openwechat.User
+		// 	var err3 error
+		// 	if msg.IsSendByGroup() {
+		// 		if msg.IsSendBySelf() {
+		// 				group, err3 = msg.Receiver()
+		// 		} else {
+		// 			group, err3 = msg.Sender()
+		// 		}
+		// 	}
+		// 	groupNickName := group.NickName
+		// 	toUserName
+		// }
 		
-		fmt.Println("\n\n\ntoUserName: ", toUserName)
-		fmt.Println("\n\n\nmsg.ToUserName: ", msg.ToUserName)
+		// fmt.Println("\n\n\ntoUserName: ", toUserName)
+		// fmt.Println("\n\n\nmsg.ToUserName: ", msg.ToUserName)
 
 
-		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName == toUserName) {
+		if (msg.IsText() && msg.IsSendByGroup()) {
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
 			if err != nil {
 				fmt.Println("Error parsing time:", err)
@@ -122,7 +136,21 @@ func main() {
 			recalledMsgId := strconv.FormatInt(revokeMsg.RevokeMsg.MsgId, 10)
 			// Find the recalled message in the queue.
 			if item, found := queue.FindByID(recalledMsgId); found {
-				msg.ReplyText("[" + item.MessageCreateTime + "] " + item.Alias + "(" + item.SenderNickName + "): " + item.MessageContent)
+				resString := "[" + item.MessageCreateTime + "] " + item.Alias + "(" + item.SenderNickName + "): " + item.MessageContent
+		
+				// Open the file in append mode, create it if it does not exist.
+				f, err := os.OpenFile("output.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+				defer f.Close()
+		
+				// Write the result string to the file.
+				if _, err := f.WriteString(resString + "\n"); err != nil {
+					fmt.Println(err)
+					return
+				}
 			} else {
 				fmt.Println("The recalled message was not found in the queue.")
 			}
