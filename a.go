@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
+	"strconv"
 	"github.com/eatmoreapple/openwechat"
 )
 
@@ -43,16 +45,24 @@ func main() {
 			return
 }
 		fmt.Println("User ID:", userID)
+		if msg.IsText(){
+			i, err := strconv.ParseInt(msg.CreateTime, 10, 64)
+			if err != nil {
+					panic(err)
+			}
+			tm := time.Unix(i, 0)
+			fmt.Println(tm)
 
-		item := QueueItem{
-			SenderNickName: sender.NickName, 
-			MessageCreateTime: msg.CreateTime,
-			MessageID: msg.MsgId,
-			MessageContent: msg.Content,
+			item := QueueItem{
+				SenderNickName: sender.NickName, 
+				MessageCreateTime: msg.CreateTime,
+				MessageID: msg.MsgId,
+				MessageContent: msg.Content,
+			}
+	
+			queue.Add(item)
+			fmt.Printf("%+v\n", item)
 		}
-
-		queue.Add(item)
-		fmt.Printf("%+v\n", item)
 	}
 
 	// Rest of your code...
