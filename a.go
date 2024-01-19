@@ -27,7 +27,7 @@ func (q *Queue) Add(item QueueItem) {
 	defer q.mu.Unlock()
 
 	q.items = append(q.items, item)
-	if len(q.items) > 100 {
+	if len(q.items) > 3 {
 		// Discard the oldest item.
 		q.items = q.items[1:]
 	}
