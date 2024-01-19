@@ -58,10 +58,11 @@ func main() {
 		toUserName := ""
 		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[UpdateToUserNameRT1046]") ){
 			toUserName := msg.RawContent[24:]
-			fmt.Println(toUserName)
+			fmt.Println("Update ToUserName: ", toUserName)
 		}
 
 		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[FetchToUserNameRT12040]") ){
+			fmt.Println("Get ToUserName: ", toUserName)
 			msg.ReplyText(toUserName)
 		}
 
