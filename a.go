@@ -31,6 +31,12 @@ func (q *Queue) Add(item QueueItem) {
 	}
 }
 
+func (q *Queue) Size() int {
+	q.mu.Lock()
+	defer q.mu.Unlock()
+	return len(q.items)
+}
+
 func main() {
 	bot := openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
 
@@ -45,7 +51,7 @@ func main() {
 		}
 		userID := sender.ID()
 		fmt.Println("User ID:", userID)
-		if (msg.IsText() && msg.IsSendByGroup()) {
+		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName=="@@bbd3e48e9da777ad2e34c453a4b51f0ec18ccabb8c92c289f2d055d136b89636") {
 			fmt.Printf("%+v\n", *msg)
 
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
@@ -75,6 +81,8 @@ func main() {
 	
 			queue.Add(item)
 			fmt.Printf("%+v\n", item)
+			size := queue.Size()
+			fmt.Println("Size of the queue:", size)
 		}
 	}
 
