@@ -5,22 +5,48 @@ import (
 	"github.com/eatmoreapple/openwechat"
 )
 
+type QueueItem struct {
+	SenderNickName string
+	MessageCreateTime int64
+	MessageID string
+	MessageContent string
+}
+
+type Queue struct {
+	items []QueueItem
+	mu    sync.Mutex
+}
+
 func main() {
 	bot := openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
 
-	// 注册消息处理函数
-	bot.MessageHandler = func(msg *openwechat.Message) {
-		sender, err2 := msg.Sender()
-		userID := sender.ID()
-		if err2 != nil{
-			fmt.Println(err2)
-			return
-}
-		fmt.Println("User ID:", userID)
-		
 
-		fmt.Printf("%+v\n", *sender)
-		fmt.Printf("%+v\n", *msg)
+func (q *Queue) Add(item QueueItem) {
+    q.mu.Lock()
+    defer q.mu.Unlock()
+
+    q.items = append(q.items, item)
+    if len(q.items) > 100 {
+        // Discard the oldest item.
+        q.items = q.items[1:]
+    }
+}
+
+// Initialize the queue.
+queue := &Queue{}
+
+bot.MessageHandler = func(msg *openwechat.Message) {
+    item := QueueItem{
+        SenderNickName: msg.NickName, 
+        MessageCreateTime: msg.CreateTime,
+        MessageID: msg.MsgId,
+        MessageContent: msg.Content,
+    }
+
+    queue.Add(item)
+		fmt.Printf("%+v\n", *item)
+}
+
 
 
     if msg.IsRecalled() {
