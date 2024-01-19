@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"github.com/eatmoreapple/openwechat"
 )
 
@@ -17,54 +18,37 @@ type Queue struct {
 	mu    sync.Mutex
 }
 
+func (q *Queue) Add(item QueueItem) {
+	q.mu.Lock()
+	defer q.mu.Unlock()
+
+	q.items = append(q.items, item)
+	if len(q.items) > 100 {
+		// Discard the oldest item.
+		q.items = q.items[1:]
+	}
+}
+
 func main() {
 	bot := openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
 
+	// Initialize the queue.
+	queue := &Queue{}
 
-func (q *Queue) Add(item QueueItem) {
-    q.mu.Lock()
-    defer q.mu.Unlock()
+	bot.MessageHandler = func(msg *openwechat.Message) {
+		item := QueueItem{
+			SenderNickName: msg.NickName, 
+			MessageCreateTime: msg.CreateTime,
+			MessageID: msg.MsgId,
+			MessageContent: msg.Content,
+		}
 
-    q.items = append(q.items, item)
-    if len(q.items) > 100 {
-        // Discard the oldest item.
-        q.items = q.items[1:]
-    }
-}
+		queue.Add(item)
+		fmt.Printf("%+v\n", item)
+	}
 
-// Initialize the queue.
-queue := &Queue{}
+	// Rest of your code...
 
-bot.MessageHandler = func(msg *openwechat.Message) {
-    item := QueueItem{
-        SenderNickName: msg.NickName, 
-        MessageCreateTime: msg.CreateTime,
-        MessageID: msg.MsgId,
-        MessageContent: msg.Content,
-    }
-
-    queue.Add(item)
-		fmt.Printf("%+v\n", *item)
-}
-
-
-
-    if msg.IsRecalled() {
-        revokeMsg, err := msg.RevokeMsg()
-		if err != nil{
-            fmt.Println(err)
-            return
-  	}
-		fmt.Println("Replace: ", revokeMsg.RevokeMsg.ReplaceMsg)
-
-        // Here you can access the fields of revokeMsg and reply accordingly
-        // For example, you can reply with the content of the recalled message
-  	// msg.ReplyText(fmt.Sprintf("You've recalled a message with ID: %d", revokeMsg.RevokeMsg.ReplaceMsg))
-		// msg.ReplyText(fmt.Sprintf("UserID: %d", userID))	
-    } else if msg.IsText() && msg.Content == "ping" {
-        msg.ReplyText("pong")
-    }
-}
 
 	// 注册登陆二维码回调
 	bot.UUIDCallback = openwechat.PrintlnQrcodeUrl
