@@ -62,7 +62,7 @@ func main() {
 		}
 
 		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[FetchToUserNameRT12040]") ){
-			fmt.Println("Get ToUserName: ", Msg.ToUserName)
+			fmt.Println("Get ToUserName: ", msg.ToUserName)
 			msg.ReplyText(toUserName)
 		}
 
