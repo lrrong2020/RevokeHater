@@ -11,6 +11,7 @@ import (
 
 type QueueItem struct {
 	SenderNickName string
+	Alias string
 	MessageCreateTime string
 	MessageID string
 	MessageContent string
@@ -26,7 +27,7 @@ func (q *Queue) Add(item QueueItem) {
 	defer q.mu.Unlock()
 
 	q.items = append(q.items, item)
-	if len(q.items) > 5 {
+	if len(q.items) > 100 {
 		// Discard the oldest item.
 		q.items = q.items[1:]
 	}
@@ -105,7 +106,8 @@ func main() {
 			fmt.Println(tm)
 
 			item := QueueItem{
-				SenderNickName: sender.NickName, 
+				SenderNickName: sender.NickName,
+				Alias: sender.Alias, 
 				MessageCreateTime: tm.Format("1月2日 15:04"),
 				MessageID: msg.MsgId,
 				MessageContent: msg.Content,
@@ -126,9 +128,9 @@ func main() {
 			recalledMsgId := strconv.FormatInt(revokeMsg.RevokeMsg.MsgId, 10)
 			// Find the recalled message in the queue.
 			if item, found := queue.FindByID(recalledMsgId); found {
-				msg.ReplyText(fmt.Sprintf("You've recalled a message: %s", item.MessageContent))
+				msg.ReplyText("[" + item.MessageCreateTime + "] " + item.Alias + "(" + item.SenderNickName + "): " + item.MessageContent)
 			} else {
-				msg.ReplyText("The recalled message was not found in the queue.")
+				fmt.Println("The recalled message was not found in the queue.")
 			}
 		}
 		
