@@ -123,7 +123,7 @@ func main() {
 				fmt.Println(err)
 				return
 			}
-			recalledMsgId := revokeMsg.RevokeMsg.MsgId
+			recalledMsgId := strconv.FormatInt(revokeMsg.RevokeMsg.MsgId, 10)
 			// Find the recalled message in the queue.
 			if item, found := queue.FindByID(recalledMsgId); found {
 				msg.ReplyText(fmt.Sprintf("You've recalled a message: %s", item.MessageContent))
