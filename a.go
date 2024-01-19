@@ -75,6 +75,10 @@ func main() {
 			toUserName = msg.ToUserName
 			fmt.Println("Update ToUserName: ", toUserName)
 		}
+		
+		fmt.Println("\n\n\ntoUserName: ", toUserName)
+		fmt.Println("\n\n\nmsg.ToUserName: ", msg.ToUserName)
+
 
 		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName == toUserName) {
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
