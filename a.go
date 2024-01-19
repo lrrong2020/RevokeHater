@@ -12,6 +12,10 @@ func main() {
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		sender, err2 := msg.Sender()
 		userID := sender.ID()
+		if err2 != nil{
+			fmt.Println(err)
+			return
+}
 		fmt.Println("User ID:", userID)
     if msg.IsRecalled() {
         revokeMsg, err := msg.RevokeMsg()
@@ -19,6 +23,7 @@ func main() {
             fmt.Println(err)
             return
   	}
+
         // Here you can access the fields of revokeMsg and reply accordingly
         // For example, you can reply with the content of the recalled message
   	msg.ReplyText(fmt.Sprintf("You've recalled a message with ID: %d", revokeMsg.RevokeMsg.ReplaceMsg))
