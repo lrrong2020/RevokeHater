@@ -52,7 +52,7 @@ func main() {
 		}
 		userID := sender.ID()
 		fmt.Println("User ID:", userID)
-		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName=="@@bbd3e48e9da777ad2e34c453a4b51f0ec18ccabb8c92c289f2d055d136b89636") {
+		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName=="@a9507465da57d650f7a8dfa8b42d5d41a3c43bcb29f217ec3cb9e41740d9218b") {
 
 
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
