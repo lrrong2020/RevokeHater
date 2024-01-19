@@ -43,7 +43,8 @@ func main() {
 
 	// Initialize the queue.
 	queue := &Queue{}
-
+	toUserName := ""
+	
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		fmt.Printf("%+v\n\n", *msg)
 		sender, err2 := msg.SenderInGroup()
@@ -55,7 +56,7 @@ func main() {
 		userID := sender.ID()
 		fmt.Println("User ID:", userID)
 
-		toUserName := ""
+
 		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[UpdateToUserNameRT1046]") ){
 			toUserName := msg.RawContent[24:]
 			fmt.Println("Update ToUserName: ", toUserName)
