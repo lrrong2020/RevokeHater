@@ -29,6 +29,7 @@ func main() {
             fmt.Println(err)
             return
   	}
+		fmt.Println("Replace: ", revokeMsg.RevokeMsg.ReplaceMsg)
 
         // Here you can access the fields of revokeMsg and reply accordingly
         // For example, you can reply with the content of the recalled message
