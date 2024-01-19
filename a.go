@@ -5,7 +5,6 @@ import (
 	"sync"
 	"time"
 	"strconv"
-	"strings"
 	"os"
 	"github.com/eatmoreapple/openwechat"
 )
@@ -58,9 +57,6 @@ func main() {
 
 	// Initialize the queue.
 	queue := &Queue{}
-	var toUserName string
-  var resString string
-
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		fmt.Printf("%+v\n\n", *msg)
 		sender, err2 := msg.SenderInGroup()
