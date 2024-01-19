@@ -43,7 +43,7 @@ func main() {
 
 	// Initialize the queue.
 	queue := &Queue{}
-	toUserName := ""
+	// toUserName := ""
 
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		fmt.Printf("%+v\n\n", *msg)
