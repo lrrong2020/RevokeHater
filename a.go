@@ -50,13 +50,13 @@ func main() {
 
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
 			if err != nil {
-					panic(err)
+				fmt.Println(err)
 			}
 			tm := time.Unix(i, 0)
 	    // Load the desired timezone
 			location, err := time.LoadLocation("Asia/Shanghai")  // Asia/Shanghai is UTC+8
 			if err != nil {
-					panic(err)
+				fmt.Println(err)
 			}
 	
 			// Convert the time value to the desired timezone
@@ -76,7 +76,6 @@ func main() {
 		}
 	}
 
-	// Rest of your code...
 
 
 	// 注册登陆二维码回调
