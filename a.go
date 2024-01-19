@@ -44,7 +44,7 @@ func main() {
 	// Initialize the queue.
 	queue := &Queue{}
 	toUserName := ""
-	
+
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		fmt.Printf("%+v\n\n", *msg)
 		sender, err2 := msg.SenderInGroup()
@@ -57,24 +57,22 @@ func main() {
 		fmt.Println("User ID:", userID)
 
 
-		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[UpdateToUserNameRT1046]") ){
-			toUserName := msg.RawContent[24:]
-			fmt.Println("Update ToUserName: ", toUserName)
-		}
+		// if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[UpdateToUserNameRT1046]") ){
+		// 	toUserName := msg.RawContent[24:]
+		// 	fmt.Println("Update ToUserName: ", toUserName)
+		// }
 
-		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[FetchToUserNameRT12040]") ){
-			fmt.Println("Get toUserName: ", toUserName)
-			msg.ReplyText("toUserName: " + toUserName)
-		}
+		// if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[FetchToUserNameRT12040]") ){
+		// 	fmt.Println("Get toUserName: ", toUserName)
+		// 	msg.ReplyText("toUserName: " + toUserName)
+		// }
 
-		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[MessageToUserNameRT040]") ){
-			fmt.Println("Get msg.ToUserName: ", msg.ToUserName)
-			msg.ReplyText("msg.ToUserName: " + msg.ToUserName)
-		}
+		// if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[MessageToUserNameRT040]") ){
+		// 	fmt.Println("Get msg.ToUserName: ", msg.ToUserName)
+		// 	msg.ReplyText("msg.ToUserName: " + msg.ToUserName)
+		// }
 
-		if (msg.IsText() && msg.IsSendByGroup() && msg.ToUserName==toUserName) {
-
-
+		if (msg.IsText() && msg.IsSendByGroup() && strings.HasPrefix(msg.RawContent, ":-")) {
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
 			if err != nil {
 				fmt.Println("Error parsing time:", err)
