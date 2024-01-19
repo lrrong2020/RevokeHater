@@ -46,7 +46,7 @@ func main() {
 		userID := sender.ID()
 		fmt.Println("User ID:", userID)
 		if (msg.IsText() && msg.IsSendByGroup()) {
-			fmt.Printf("%+v\n", msg)
+			fmt.Printf("%+v\n", *msg)
 
 			i, err := strconv.ParseInt(strconv.FormatInt(msg.CreateTime, 10), 10, 64)
 			if err != nil {
