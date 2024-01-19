@@ -57,7 +57,7 @@ func main() {
 
 		toUserName := ""
 		if (msg.IsText() && strings.HasPrefix(msg.RawContent, "[UpdateToUserNameRT1046]") ){
-			toUserName := msg.RawContent[27:]
+			toUserName := msg.RawContent[24:]
 			fmt.Println(toUserName)
 		}
 
