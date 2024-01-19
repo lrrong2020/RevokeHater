@@ -51,12 +51,21 @@ func main() {
 					panic(err)
 			}
 			tm := time.Unix(i, 0)
+	    // Load the desired timezone
+			location, err := time.LoadLocation("Asia/Shanghai")  // Asia/Shanghai is UTC+8
+			if err != nil {
+					panic(err)
+			}
+	
+			// Convert the time value to the desired timezone
+			tm = tm.In(location)
+	
 			fmt.Println(tm)
 
 			item := QueueItem{
 				SenderNickName: sender.NickName, 
 				MessageCreateTime: msg.CreateTime,
-				MessageID: msg.MsgId,
+				MessageID: tm,
 				MessageContent: msg.Content,
 			}
 	
