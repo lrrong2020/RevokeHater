@@ -26,7 +26,7 @@ func (q *Queue) Add(item QueueItem) {
 	defer q.mu.Unlock()
 
 	q.items = append(q.items, item)
-	if len(q.items) > 100 {
+	if len(q.items) > 5 {
 		// Discard the oldest item.
 		q.items = q.items[1:]
 	}
@@ -37,6 +37,19 @@ func (q *Queue) Size() int {
 	defer q.mu.Unlock()
 	return len(q.items)
 }
+
+func (q *Queue) FindByID(id string) (QueueItem, bool) {
+	q.mu.Lock()
+	defer q.mu.Unlock()
+
+	for _, item := range q.items {
+		if item.MessageID == id {
+			return item, true
+		}
+	}
+	return QueueItem{}, false
+}
+
 
 func main() {
 	bot := openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
@@ -103,6 +116,23 @@ func main() {
 			size := queue.Size()
 			fmt.Println("Size of the queue:", size)
 		}
+
+		if msg.IsRecalled() {
+			revokeMsg, err := msg.RevokeMsg()
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			recalledMsgId := revokeMsg.RevokeMsg.MsgId
+			// Find the recalled message in the queue.
+			if item, found := queue.FindByID(recalledMsgId); found {
+				msg.ReplyText(fmt.Sprintf("You've recalled a message: %s", item.MessageContent))
+			} else {
+				msg.ReplyText("The recalled message was not found in the queue.")
+			}
+		}
+		
+
 	}
 
 	// 注册登陆二维码回调
