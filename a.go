@@ -58,7 +58,9 @@ func main() {
 	// Initialize the queue.
 	queue := &Queue{}
 	bot.MessageHandler = func(msg *openwechat.Message) {
-		// fmt.Printf("%+v\n\n", *msg)
+		//debug
+		fmt.Printf("[Message Info]%+v\n\n", *msg)
+
 		sender, err2 := msg.SenderInGroup()
 		if err2 != nil{
 			fmt.Println(err2)
