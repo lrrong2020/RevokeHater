@@ -61,7 +61,7 @@ func main() {
 	queue := &Queue{}
 	class_strings := []string{"典", "幽默", "难蚌", "乐", "急", "绷", "经典", "典中典", "O(∩_∩)O哈哈~"}
 
-	var count_bs int = 0
+
 
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		//debug
