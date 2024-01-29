@@ -6,6 +6,7 @@ import (
 	"time"
 	"strconv"
 	"os"
+	"strings"
 	"github.com/eatmoreapple/openwechat"
 )
 
