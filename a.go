@@ -188,6 +188,8 @@ func main() {
 		 return
  }
 
+ fmt.Println("Groups:", groups)
+
  // Search for the group named '幽默群'
  foundGroups := groups.SearchByNickName(1, "谜语群")
  if len(foundGroups) == 0 {
