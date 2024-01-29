@@ -72,11 +72,11 @@ func main() {
 		// fmt.Println("User ID:", userID)
 
 
-		if (msg.IsText() && strings.HasPrefix(msg.Content, "@啊？？？？") ){
-			if (msg.IsText() && strings.HasPrefix(msg.Content, "@啊？？？？不是") ){
+		if (msg.IsText() && strings.HasPrefix(msg.Content, "@啊？？？？ ") ){
+			if (msg.IsText() && strings.HasPrefix(msg.Content, "@啊？？？？ 不是") ){
 				msg.ReplyText("哥们")
 			}
-			if (msg.IsText() && strings.HasPrefix(msg.Content, "@啊？？？？ping") ){
+			if (msg.IsText() && strings.HasPrefix(msg.Content, "@啊？？？？ ping") ){
 				msg.ReplyText("pong")
 			}
 		}
