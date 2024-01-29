@@ -181,13 +181,35 @@ func main() {
 	}
 	fmt.Println(friends)
 
-	// 获取所有的群组
-	groups, err := self.Groups()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(groups)
+ // 获取所有的群组
+ groups, err := self.Groups()
+ if err != nil {
+		 fmt.Println(err)
+		 return
+ }
+
+ // Search for the group named '幽默群'
+ foundGroups := groups.SearchByNickName(1, "谜语群")
+ if len(foundGroups) == 0 {
+		 fmt.Println("No group found with the name '谜语群'")
+		 return
+ }
+
+ // Get the first found group
+ group := foundGroups[0]
+
+ // Get all the members of the group
+ members, err := group.Members()
+ if err != nil {
+		 fmt.Println(err)
+		 return
+ }
+
+ // Print all the members
+ for _, member := range members {
+		 fmt.Println(member.NickName)
+ }
+
 
 	// 阻塞主goroutine, 直到发生异常或者用户主动退出
 	bot.Block()
