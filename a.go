@@ -59,7 +59,10 @@ func main() {
 
 	// Initialize the queue.
 	queue := &Queue{}
-	class_strings := []string{"典", "幽默", "难蚌", "乐", "急", "绷", "经典", "典中典"}
+	class_strings := []string{"典", "幽默", "难蚌", "乐", "急", "绷", "经典", "典中典", "O(∩_∩)O哈哈~"}
+
+	var count_bs int = 0
+
 	bot.MessageHandler = func(msg *openwechat.Message) {
 		//debug
 		fmt.Printf("[Message Info]%+v\n\n", *msg)
@@ -72,29 +75,23 @@ func main() {
 		// fmt.Printf("%+v\n\n", *sender)
 
 		// fmt.Println("User ID:", userID)
-		var count_bs int = 0
+
 		if msg.IsText() {
-				if strings.HasPrefix(msg.Content, "@a? ") && count_bs < 3 {
-						count_bs = count_bs + 1
-				} else if count_bs < 6 {
-						msg.ReplyText("你@你的马呢???啊????????????")
-				} else if count_bs > 8 {
-						// Seed the random number generator
-						rand.Seed(time.Now().UnixNano())
-		
-						// Get a random index
-						index := rand.Intn(len(class_strings))
-						msg.ReplyText(class_strings[index])
-				} else {
-						count_bs = 0
-				}
 		
 				if strings.HasPrefix(msg.Content, "@a? 不是") {
 						msg.ReplyText("哥们")
 				}
 				if strings.HasPrefix(msg.Content, "@a? ping") {
 						msg.ReplyText("pong")
-				}
+				} else if strings.HasPrefix(msg.Content, "@a? ") {
+					rand.Seed(time.Now().UnixNano())
+		
+					// Get a random index
+					index := rand.Intn(len(class_strings))
+					msg.ReplyText(class_strings[index])
+			} else {
+
+			}
 		}
 		
 		// 	toUserName = msg.ToUserName
