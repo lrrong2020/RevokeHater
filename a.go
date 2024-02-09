@@ -80,9 +80,6 @@ func main() {
 		
 				if strings.HasPrefix(msg.Content, "@a? 不是") {
 						msg.ReplyText("哥们")
-				}
-				if strings.HasPrefix(msg.Content, "@a? ping") {
-						msg.ReplyText("pong")
 				} else if strings.HasPrefix(msg.Content, "@a? ") {
 					rand.Seed(time.Now().UnixNano())
 		
